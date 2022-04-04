@@ -1,4 +1,4 @@
-function binarySearch(arr:number[], target:number) {
+function binarySearch( arr:number[], target:number) {
     let left = 0;
     let right = arr.length - 1;
 

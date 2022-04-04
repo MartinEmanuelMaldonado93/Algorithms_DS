@@ -113,7 +113,8 @@ var BinNode = /** @class */ (function () {
         }
     };
     BinNode.prototype.sumTree = function () {
-        return this._sumTree(this);
+        // return this._sumTree(this);
+        console.log(this._sumTreeRecursive(this, 0));
     };
     BinNode.prototype._sumTree = function (root) {
         var queue = [root];
@@ -179,15 +180,28 @@ var BinNode = /** @class */ (function () {
         cache.push(root.data);
         return cache;
     };
+    BinNode.prototype._sumTreeRecursive = function (root) {
+        if (root === null)
+            return 0;
+        return this._sumTreeRecursive(root.leftNode) +
+            root.data +
+            this._sumTreeRecursive(root.rightNode);
+    };
     return BinNode;
 }());
 ;
-var a = new BinNode('a');
-var b = new BinNode('b');
-var c = new BinNode('c');
-var d = new BinNode('d');
-var e = new BinNode('e');
-var f = new BinNode('f');
+var a = new BinNode(3);
+var b = new BinNode(2);
+var c = new BinNode(7);
+var d = new BinNode(4);
+var e = new BinNode(-2);
+var f = new BinNode(5);
+// let a = new BinNode('a'); 
+// let b = new BinNode('b');
+// let c = new BinNode('c'); 
+// let d = new BinNode('d');
+// let e = new BinNode('e');
+// let f = new BinNode('f');
 a.leftNode = b;
 a.rightNode = c;
 b.leftNode = d;
@@ -198,4 +212,5 @@ c.rightNode = f;
 // a.sumTree();
 // a.preOrder();//[ 'a', 'b', 'd', 'e', 'c', 'f' ]
 // a.postOrder();// [d,e,b,f,c,a] 
-a.inOrder(); // 
+// a.inOrder(); // 
+a.sumTree();

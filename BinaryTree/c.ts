@@ -114,7 +114,8 @@ class BinNode{
         }  
     } 
     sumTree(){
-        return this._sumTree(this);
+        // return this._sumTree(this);
+        console.log( this._sumTreeRecursive(this, 0) );
     }
     private _sumTree( root:BinNode ){ 
         const queue = [root];
@@ -176,15 +177,26 @@ class BinNode{
         this._postOrder( root.rightNode, cache);
         cache.push(root.data); 
         return cache; 
+    } 
+    private _sumTreeRecursive(root:BinNode  ){
+        if(root === null) return 0;   
+        return  this._sumTreeRecursive( root.leftNode ) + 
+                root.data + 
+                this._sumTreeRecursive( root.rightNode );
     }
 };
-
-let a = new BinNode('a'); 
-let b = new BinNode('b');
-let c = new BinNode('c'); 
-let d = new BinNode('d');
-let e = new BinNode('e');
-let f = new BinNode('f');
+let a = new BinNode(3); 
+let b = new BinNode(2);
+let c = new BinNode(7); 
+let d = new BinNode(4);
+let e = new BinNode(-2);
+let f = new BinNode(5);
+// let a = new BinNode('a'); 
+// let b = new BinNode('b');
+// let c = new BinNode('c'); 
+// let d = new BinNode('d');
+// let e = new BinNode('e');
+// let f = new BinNode('f');
 
 a.leftNode  = b;
 a.rightNode = c;
@@ -197,7 +209,8 @@ c.rightNode = f;
 // a.sumTree();
 // a.preOrder();//[ 'a', 'b', 'd', 'e', 'c', 'f' ]
 // a.postOrder();// [d,e,b,f,c,a] 
-a.inOrder(); // 
+// a.inOrder(); // 
+a.sumTree();
 
 // pre order   root- left-right 
 // in order    left- root-right
