@@ -100,7 +100,8 @@ function minCoin(n, coins) {
     return table[n - 1];
 }
 // console.log( minCoin(7,[3,2,1,4]) ); 
-function canSum(target, nums) {
+// Similar to minCoin problem 
+function canSum1(target, nums) {
     if (target === 0)
         return true;
     var table = Array(target + 1);
@@ -118,30 +119,32 @@ function canSum(target, nums) {
     }
     return table[target - 1];
 }
-// function canSum( target:number, nums:number[]) {
-//     let table = Array(target+1).fill(false);
-//     table[0] = 0;
-//     for (let i = 0; i <= target; i++) {
-//         if(table[i] === true){
-//             for (let num of nums) {
-//                 table[i+num] = true;
-//             }
-//         } 
-//     }
-//     return table[target];
-// }
-// console.log( canSum(7, [3,4,9]));// must be 'true', doesn't matter the order of array
-// console.log( canSum(7, [5,3,4]));// must be 'true'
-// console.log( canSum(1, [5,3,4]));// must be 'false'
-// console.log( canSum(0, [5,3,4]));// must be 'true'
-// console.log( canSum(300, [7,14]));// must be 'true'
-function howSum(target, nums) {
-    var table = Array(target + 1).fill(null);
-    table[0] = [];
-    for (var i = 0; i < target; i++) {
-        if (table[i] !== null) {
+function canSum(target, nums) {
+    var table = Array(target + 1).fill(false);
+    // table.forEach( a => a=false ); 
+    table[0] = true;
+    for (var i = 0; i <= target; i++) {
+        if (table[i] === true) {
             for (var _i = 0, nums_3 = nums; _i < nums_3.length; _i++) {
                 var num = nums_3[_i];
+                table[i + num] = true;
+            }
+        }
+    }
+    return table[target];
+}
+// console.log( canSum(7, [3,4,9]));// must be 'true', doesn't matter the order of array
+// console.log( canSum(7, [5,4,2]));// must be 'true'
+// console.log( canSum(1, [5,3,4]));// must be 'false'
+// console.log( canSum(0, [5,3,4]));// must be 'true'
+// console.log( canSum(3004, [7,14]));// must be 'true'
+function howSum(target, nums) {
+    var table = Array(target + 1).fill(null);
+    table[0] = []; //First case empty array
+    for (var i = 0; i <= target; i++) {
+        if (table[i] !== null) {
+            for (var _i = 0, nums_4 = nums; _i < nums_4.length; _i++) {
+                var num = nums_4[_i];
                 var comb = __spreadArray(__spreadArray([], table[i], true), [num], false);
                 table[i + num] = comb;
             }
@@ -149,19 +152,20 @@ function howSum(target, nums) {
     }
     return table[target];
 }
-// console.log( howSum(8, [2,3,5]));// 3,5
+// console.log( howSum(8, [2,3,5]));// 2, 2, 2, 2
 // console.log( howSum(7, [3,4,9]));// 4,3
-// console.log( howSum(7, [5,3,4,7]));// 4,3
+// console.log( howSum(9, [5,3,4,7]));// 3,3,3
 // console.log( howSum(300, [7, 14]));// null
 function bestSumIter(target, nums) {
     var table = Array(target + 1).fill(null);
     table[0] = [];
-    for (var i = 0; i < target; i++) {
+    for (var i = 0; i <= target; i++) {
         if (table[i] !== null) {
-            for (var _i = 0, nums_4 = nums; _i < nums_4.length; _i++) {
-                var num = nums_4[_i];
+            for (var _i = 0, nums_5 = nums; _i < nums_5.length; _i++) {
+                var num = nums_5[_i];
                 var comb = __spreadArray(__spreadArray([], table[i], true), [num], false);
-                if (!(table[i + num]) || table[i + num].length > comb.length) {
+                if (!(table[i + num]) || // falsy value
+                    table[i + num].length > comb.length) {
                     table[i + num] = comb;
                 }
             }
@@ -170,8 +174,61 @@ function bestSumIter(target, nums) {
     return table[target];
 }
 // console.log( bestSumIter(8, [2,3,5]));// 3,5
-// console.log( bestSumIter(7, [3,4,9]));// 4,3
-// console.log( bestSumIter(100, [1,2,9,25]));// 4,3
-function canConstructIter(target, arr) {
-    var table = Array(target.length + 1);
+// console.log( bestSumIter(7, [3,4,9]));// 3,4
+// console.log( bestSumIter(15, [3,4,9]));// 3,3,9 
+// console.log( bestSumIter(100, [1,2,9,25]));// 25, 25, 25, 25
+//                          ~Strings~
+function canConstructIter(target, wordBank) {
+    var table = Array(target.length + 1).fill(false);
+    table[0] = true; // bc for construct '' we no need any word
+    for (var i = 0; i <= target.length; i++) {
+        if (table[i] === true) {
+            for (var _i = 0, wordBank_2 = wordBank; _i < wordBank_2.length; _i++) {
+                var word = wordBank_2[_i];
+                if (target.slice(i, i + word.length) === word) //that porcion of target==word??...
+                    table[i + word.length] = true;
+            }
+        }
+    }
+    return table[target.length];
 }
+// console.log( canConstructIter('abcdef',['ab','abc','cd','def','abcd']) ); // true
+// console.log( canConstructIter('abcdef',['z','ab','ret']) ); // false
+// console.log( canConstructIter('skateboard',['bo','rd','ate','t','ska','sk','boar']) ); // false
+function countConstruct(target, wordBank) {
+    var table = Array(target.length + 1).fill(0);
+    table[0] = 1;
+    for (var i = 0; i <= target.length; i++) {
+        for (var _i = 0, wordBank_3 = wordBank; _i < wordBank_3.length; _i++) {
+            var word = wordBank_3[_i];
+            if (target.slice(i, i + word.length) === word) {
+                table[i + word.length] += table[i]; // accumulate 
+            }
+        }
+    }
+    return table[target.length];
+}
+// console.log(countConstruct('abc', ['a','b','c','ab','bc']) );// 3
+// console.log(countConstruct('purple', ['purp','p','ur','le','purpl']) );//2
+// console.log(countConstruct("abcdef", ["ab", "abc", "cd", "def", "abcd"]) );//1  
+function allConstructTab(target, wordBank) {
+    var table = Array(target.length + 1)
+        .fill(null).map(function () { return []; });
+    table[0] = [[]];
+    for (var i = 0; i < target.length; i++) {
+        var _loop_2 = function (word) {
+            var _a;
+            if (target.slice(i, word.length + i) == word) {
+                var newCombination = table[i].map(function (subArray) { return __spreadArray(__spreadArray([], subArray, true), [word], false); });
+                (_a = table[i + word.length]).push.apply(_a, newCombination);
+            }
+        };
+        for (var _i = 0, wordBank_4 = wordBank; _i < wordBank_4.length; _i++) {
+            var word = wordBank_4[_i];
+            _loop_2(word);
+        }
+    }
+    return table[target.length];
+}
+console.log(allConstructTab('purple', ['purp', 'p', 'ur', 'le', 'purpl']));
+// console.log(allConstructTab("abcdef", ["ab", "abc", "cd", "def", "abcd"]) );  
