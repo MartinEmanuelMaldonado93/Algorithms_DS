@@ -2,4 +2,5 @@ ALGORITMOS/**/**/*.js
 ALGORITMOS/*.js
 ALGORITMOS/**.txt
 *.js
+*.txt
 .vscode
