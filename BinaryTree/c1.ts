@@ -115,7 +115,7 @@ class BinNode{
     } 
     sumTree(){
         // return this._sumTree(this);
-        console.log( this._sumTreeRecursive(this, 0) );
+        console.log( this._sumTreeRecursive(this) );
     }
     private _sumTree( root:BinNode ){ 
         const queue = [root];

@@ -1,6 +1,10 @@
-ALGORITMOS/**/**/*.js
-ALGORITMOS/*.js
-ALGORITMOS/**.txt
+#ALGORITMOS/**/**/*.js
+#ALGORITMOS/*.js
+#ALGORITMOS/*.txt
+
+ALGORITMOS/.vscode/*json
+
 *.js
 *.txt
-.vscode
+
+/.vscode

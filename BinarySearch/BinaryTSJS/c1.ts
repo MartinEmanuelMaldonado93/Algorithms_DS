@@ -25,7 +25,7 @@ function recursiveBinSearch(arr:number[],target:number,left:number,right:number)
         return recursiveBinSearch(arr,target, mid+1, right); 
 }
 
-let nums = [2,7,8,9,10,13,17,19,21];
+let nums = [2,7,8,9,10,13,17];
 console.log(binarySearch(nums, 7));//1
 console.log(binarySearch(nums, 19));//7
 console.log(binarySearch(nums, 15));//-1
