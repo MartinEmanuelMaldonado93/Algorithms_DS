@@ -1,2 +1,4 @@
-ALGORITMOS/**/*.js
+ALGORITMOS/**/**/*.js
+ALGORITMOS/*.js
+.vscode
 ALGORITMOS/*.txt
