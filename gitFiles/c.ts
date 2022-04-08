@@ -1,1 +1,1 @@
-console.log(" hello world ! generate file...");
+console.log(" hello world ! generat     file...");
