@@ -1,0 +1,57 @@
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+
+typedef struct Node
+{
+    int data;
+    struct Node *next;
+    Node(int x){
+        data = x;
+        next=NULL;
+    }
+    int push(int data){
+        Node* temp = this;
+    }
+    
+};
+class Solution { 
+    public:
+    Node* reverseList(Node* head)
+    { 
+        Node* current = head;
+        Node* next    = NULL;
+        Node* previous  = NULL;
+
+        while(current != NULL){  
+            next = current->next;
+            current->next= previous;
+            previous=current;
+            current = next;
+        }
+        /*while(current!=NULL){
+           nextNode = previous;//
+           previous = current; //
+           current = current->next; // se pisa a si mismo
+           previous->next = nextNode; //  
+        }*/
+        
+        return previous;
+    }
+                                //  1-2-3-4-5
+    Node* reverseList1(Node* node)
+    { 
+        if(node==NULL || node->next==NULL)
+            return node;
+        // parado en el 4 
+        Node* head = reverseList1(node->next);//lepaso el 5 me devuelve el 5 ahora es head
+        node->next->next = node;//el siguiente del 5 ahora es el 4 ;) 
+        return head;
+    }
+    
+};
+
+int main(){
+
+    return 0;
+}

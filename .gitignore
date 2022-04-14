@@ -1,8 +1,4 @@
-#ALGORITMOS/**/**/*.js
-#ALGORITMOS/*.js
-#ALGORITMOS/*.txt
-
-ALGORITMOS/.vscode/*json
+.vscode/
 
 *.js
 *.txt

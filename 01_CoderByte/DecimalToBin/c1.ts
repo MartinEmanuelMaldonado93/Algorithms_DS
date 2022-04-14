@@ -1,9 +1,8 @@
 function decToBin(num:number) {
     if(num <= 0) return ''; 
 
-    let rem:number = num % 2; 
-    let divResult  = Math.floor(num/2);  
-
+    let rem = num % 2; 
+    let divResult  = Math.floor(num/2);   
     return `${decToBin(divResult)}${rem}`;
 }
 // 100

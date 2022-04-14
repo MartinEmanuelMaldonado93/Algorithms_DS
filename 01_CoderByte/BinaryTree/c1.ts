@@ -1,4 +1,3 @@
-'use strict'; 
 class QueueNode{
     val:  any;
     next: QueueNode;
