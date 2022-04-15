@@ -2,5 +2,6 @@
 
 *.js
 *.txt
+*.exe
 
 /.vscode

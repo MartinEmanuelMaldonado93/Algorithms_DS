@@ -18,7 +18,7 @@ int main(){
     for(int i=0;i<len;i++)  
         a^=arr[i]; 
    
-    printf("\nResultado : %d ",a); 
+    printf("\nResultado : %d ",a); // 39
  
     /*{
         if(mySet.find(arr[i]) == mySet.end())// Si no está 'X' número, lo agrego.
