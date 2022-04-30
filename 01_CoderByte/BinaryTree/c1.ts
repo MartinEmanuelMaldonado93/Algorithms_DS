@@ -1,14 +1,14 @@
 class QueueNode{
-    val:  any;
+    val:string|number;
     next: QueueNode;
-    constructor(val:any){
+    constructor(val:string|number){
         this.val  = val;
         this.next = null;
     }
 };
 class Queue{
-    front: QueueNode;
-    back : QueueNode; 
+    front: QueueNode|null;
+    back : QueueNode|null; 
     size:number;
     constructor(){
         this.front = null;
@@ -58,12 +58,11 @@ class Queue{
     }
 
 }
-
 class BinNode{
-    data:any;
+    data:string|number;
     rightNode:BinNode;
-    leftNode:BinNode;
-    constructor( n:any ){ 
+    leftNode :BinNode;
+    constructor( n: string|number ){ 
             this.data = n;
             this.rightNode = null;
             this.leftNode  = null; 

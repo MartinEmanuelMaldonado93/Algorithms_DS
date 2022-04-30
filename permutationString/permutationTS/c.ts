@@ -5,7 +5,7 @@ class Solution{
             console.log(str);
         else{
             for (let i=left; i<=right; i++) {
-                let swapped:string = this.swap(str, left, i);
+                let swapped = this.swap(str, left, i);
                 this.calculate(swapped, left+1, right)
             }
         }

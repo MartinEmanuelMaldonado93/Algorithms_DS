@@ -1,6 +1,6 @@
-'use strict';
+
 class NODE{ 
-    data:number = 0; 
+    data = 0; 
     public nextNode:NODE = null;  
     constructor(n:number){
         this.data = n;

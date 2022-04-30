@@ -1,4 +1,4 @@
-const undirectedPath = (edges=[], nodeA:string, nodeB:string) =>{
+const undirectedPath = (edges:string[][], nodeA:string, nodeB:string) =>{
     const graph = buildGraph(edges);
     return hasPath( graph, nodeA, nodeB, new Set() );
 } 
@@ -16,9 +16,8 @@ function hasPath( graph:{}, source:string, dest:string, visited:any ) {
     }
     return false;
 }
-function buildGraph(edges) {
-    const graph = {};
-
+function buildGraph(edges:string[][]) {
+    const graph = {}; 
     for (let edge of edges) {
         const [ a, b] = edge;
         if( !(a in graph) )  graph[a] = [];
@@ -29,7 +28,7 @@ function buildGraph(edges) {
     }
     return graph;
 }
-const edges = [
+const edges01 = [
     ['i','j'],
     ['k','i'],
     ['m','k'],
@@ -38,5 +37,5 @@ const edges = [
 ];
 
 // console.log( buildGraph(edges) );
-let result = undirectedPath( edges, 'j', 'm');
+let result = undirectedPath( edges01, 'j', 'm');
 console.log(result);

@@ -88,8 +88,7 @@ public:
         }
         cout<< count[target];
         return 0;
-    } 
-    int 
+    }  
 };
 
 int main(){  

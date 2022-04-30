@@ -1,6 +1,7 @@
 const combinations = (elements:string[]) => {
-    if(elements.length == 0)
-        return [ [] ]; 
+    if(elements.length === 0){
+        return [ [] ];
+    }
     const firstEl = elements[0];// 'a'
     const rest = elements.slice(1); // 'b' 'c'
     const combsWithoutFirst = combinations(rest);
@@ -13,7 +14,9 @@ const combinations = (elements:string[]) => {
     return [...combsWithoutFirst,...combsWithFirst];
 };
 
-combinations(['a','b','c'])
+combinations(["1","2"]);
+combinations(["1","2"]);
+// combinations(['a','b','c']);
 //console.log(combinations(['a','b','c']));
 // []
 // [a]

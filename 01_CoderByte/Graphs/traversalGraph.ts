@@ -1,15 +1,6 @@
-'use strict';
-
-class Solution{
-    constructor( ){ }
-    namefunction(str:string[]){
-
-        return str;
-    }
-};
 const myGraph = {
-    a:['c','b'],
     // a:['b','c'],
+    a:['c','b'],
     b:['d'],
     c:['e'],
     d:['f'],
@@ -33,7 +24,7 @@ function dephtRecursive( graph:{}, curr:string) {
 
 }
 // ------------------------------------------------------------------------
-function breathFirstSearch(graph:{} , source) {
+function breathFirstSearch(graph:{} , source:string) {
     let queue = [source];
     while(queue.length > 0){
         let curr = queue.shift();
@@ -43,6 +34,7 @@ function breathFirstSearch(graph:{} , source) {
         }
     }
 }
+breathFirstSearch( myGraph, 'a' );// acbedf
 //-----------------------  PROBLEMS  -----------------------------
 const myGraph2 = {
     f:['g','i'],
@@ -53,7 +45,8 @@ const myGraph2 = {
     k:[]
 }
 function hasPath(graph:{}, source:string, dst:string){
-    if(source === dst)  return true;
+    if(source === dst)
+        return true;
     for (const neighbor of graph[source]) {
         if(hasPath(graph,neighbor,dst))
             return true;
