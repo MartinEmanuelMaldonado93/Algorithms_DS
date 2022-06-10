@@ -17,8 +17,7 @@ typedef struct Node
 };
 class Solution { 
     public:
-    Node* reverseList(Node* head)
-    { 
+    Node* reverseList(Node* head){ 
         Node* current = head;
         Node* next    = NULL;
         Node* previous  = NULL;
@@ -39,13 +38,12 @@ class Solution {
         return previous;
     }
                                 //  1-2-3-4-5
-    Node* reverseList1(Node* node)
-    { 
+    Node* reverseList1(Node* node){ 
         if(node==NULL || node->next==NULL)
             return node;
-        // parado en el 4 
-        Node* head = reverseList1(node->next);//lepaso el 5 me devuelve el 5 ahora es head
-        node->next->next = node;//el siguiente del 5 ahora es el 4 ;) 
+         
+        Node* head = reverseList1(node->next); 
+        node->next->next = node; 
         return head;
     }
     

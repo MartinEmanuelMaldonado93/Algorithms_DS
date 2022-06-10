@@ -3,7 +3,9 @@ function binarySearch( arr:number[], target:number ) {
     let right = arr.length - 1;
 
     while(left < right){
+
         let mid = Math.floor(left + (right-left)/2);   
+
         if(arr[mid] === target) 
             return mid;
         if(arr[mid] > target)
@@ -17,6 +19,7 @@ function recursiveBinSearch(arr:number[],target:number,left:number,right:number)
     if(left > right ) return -1;// Invalid position of arr...
 
     let mid = Math.floor(left + (right-left)/2);// avoid overflow
+    
     if( arr[mid] === target ) 
         return mid;
     else if( target < arr[mid] )  

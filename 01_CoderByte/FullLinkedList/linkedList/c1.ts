@@ -1,20 +1,25 @@
 
 class NODE{ 
     data = 0; 
-    public nextNode:NODE = null;  
-    constructor(n:number){
+    nextNode:NODE|null = null;  
+    
+    constructor( n:number ){
         this.data = n;
         this.nextNode = null;
     }
-    deleteItemIterative(item:number){ 
+    
+    deleteItemIterative( item:number ){ 
         let buffer = this.data;
         this._deleteItemIterative(this, item); 
-        if(buffer === item)
+        
+        if(buffer === item){
             this.pop(); 
+        }
     }
     private _deleteItemIterative(head:NODE, item:number){ 
-        let prev = null;
-        let curr = head; 
+        let prev:NODE|null = null;
+        let curr:NODE|null = head; 
+        
         if(curr.data === item){ 
             while(curr.nextNode != null){
                 curr.data = curr.nextNode.data;
@@ -22,14 +27,16 @@ class NODE{
             }
             return;
         } 
+
         while( curr !== null ){
             if(curr.data === item){
-                prev.nextNode = curr.nextNode; 
+                prev!.nextNode = curr.nextNode; 
             } 
             prev = curr;// I'm save the curr, wich in the next itr is prev !
             curr = curr.nextNode;
         }
     }
+
     private _deleteItem(head:NODE,item:number){
         if(head.nextNode === null ) return head;
         if(head.nextNode.data === item){
@@ -42,117 +49,156 @@ class NODE{
             return head;
         }
     }
-    deleteItem(item:number){
+    deleteItem( item:number ){
         return this._deleteItem(this, item);
     }
+    
+    /**
+     * it doesn't work for internal pointers 🤔
+     */
     popBad(){
         return this._popBad(this);
     }
-    private _popBad(head:NODE){
-        if(head.nextNode === null){ 
-            let dataPop = head.data; 
-            head = null;// for some pointer/reason doesn't work 
+    private _popBad( head:NODE|null ){
+
+        if(head!.nextNode === null){ 
+            let dataPop = head!.data; 
+            head = null;// for some pointer/reason, doesn't work 
             // head = new NODE(555);
             return dataPop;
         }
-        head._popBad(head.nextNode);
+
+        head!._popBad(head!.nextNode);
     }
-    // Costo pero salio 
-    private _pop(head:NODE){
-        if(head.nextNode === null) { 
+     
+    pop(){
+        return this._pop(this);
+    }
+    private _pop( head:NODE|null ){
+
+        if(head!.nextNode === null) { 
             head = null; // Delete last node,so now the previousNode points to null...
             return head;  
         }
         else
-            head.nextNode = this._pop( head.nextNode );//I catch the return value (base case is 'null' )
-            return head;
+            head!.nextNode = this._pop( head!.nextNode );//I catch the return value (base case is 'null' )
+            
+        return head;
+        
     }
-    pop(){
-        return this._pop(this);
-    }
-    pushVector(arr = []){
-        if(arr.length>0){
-            for (let i = 0; i < arr.length; i++) {
-                const element = arr[i];
-                this.push_back(element);
-            }
-        }
-        else
+   
+    pushVector( arr:Array<number> ) {
+
+        if(arr.length <= 0) {
             console.log("Empty!");
+        }
+
+        for (let i = 0; i < arr.length; i++) {
+            const element = arr[i];
+            this.push_back(element);
+        }
+        
     }
-    push_front(newData:number){
-        if(this.nextNode == null){
+
+    push_front( newData:number ) {
+        
+        if(this.nextNode === null) {
             this.nextNode = new NODE(newData);
             return newData;
         }
+
         let newNode = new NODE(newData);
         newNode.data = this.data;
         this.data = newData;
+
         newNode.nextNode = this.nextNode;
         this.nextNode = newNode;
+
         return newData;
     } 
-    push_back(newData:number){
-        if(this.nextNode == null){
+
+    push_back( newData:number ) {
+        
+        if(this.nextNode === null) {
             this.nextNode = new NODE(newData);
             return newData; 
         }
+
         let lastNode:NODE = this;
-        while(lastNode.nextNode != null){
+        while(lastNode.nextNode !== null) {
             lastNode = lastNode.nextNode;
         }
+
         lastNode.nextNode = new NODE(newData);
         return lastNode.nextNode.data;
     }
-    private addNode(index:number, currNode:NODE){
+
+    private addNode( index:number, currNode:NODE ) {
         return this._addNode(this,index,currNode);
     }
-    private _addNode(head:NODE, index:number, currNode:NODE){
+    private _addNode(head:NODE, index:number, currNode:NODE):boolean {
+       
         let len:number = this.lenNode();
-        if(index >= 0 && index <= len && currNode != null){
-            if(index === 0){
-                currNode.nextNode = head.nextNode;
-                head.nextNode = currNode; 
-                return true;
-            }
-            else{
-                let prev = this.getNode(index-1);
-                currNode.nextNode = prev.nextNode;
-                prev.nextNode = currNode; 
-                return true;
-            }
-        } 
-        return false;
-    }
-    private getNode( index:number ){
-        let len:number = this.lenNode();
-        if(index >= 0 && index < len){
-            if(index == 0) return this;
+        
+        if( !(index >= 0 && index <= len) ) {
+            return false;
+        }
 
-            let i = 1;
-            let temp = this.nextNode;
-            while(temp != null && index != i){
-                temp = temp.nextNode;
-                i++;
-            }
-            return temp;
+        if(index === 0) {
+            currNode.nextNode = head.nextNode;
+            head.nextNode = currNode; 
+
+            return true;
         }
-        return null;
+        
+        let prev = this._getNode(index-1);
+        currNode.nextNode = prev!.nextNode;
+        prev!.nextNode = currNode; 
+
+        return true; 
     }
-    getData( i:number ){
+    
+    private _getNode( index:number ){
+
+        let len:number = this.lenNode();
+
+        if( !(index >= 0 && index < len) ){
+            return null;
+        }
+
+        if(index === 0) return this;
+
+        let temp = this.nextNode;
+        let i = 1;
+        while(temp !== null && index !== i){
+            temp = temp.nextNode;
+            i++;
+        }
+
+        return temp; 
+    }
+
+    getData( index:number ){
+        
+        let len = this.lenNode(); 
+        if(index > len) { 
+            return null;
+        }
+
+        if(index == 0) return this; 
+
+        let temp:NODE|null = this; 
         let count = 0;
-        let len = this.lenNode();
-        if(i < len){
-            if(i == 0) return this; 
-            let temp:NODE = this; 
-            while(temp != null){
-                if(i == count)
-                    return temp;
-                count++;
-                temp = temp.nextNode;
+
+        while(temp !== null){
+            if(index == count){
+                return temp;
             }
-        }
+            count++;
+            temp = temp.nextNode;
+        } 
     }
+   
     setData(i:number, data:number){
         return this._setData(this, i, data);
     }
@@ -175,30 +221,37 @@ class NODE{
             }
         }
     }
+    
     contains( target:number ){
         console.log( this._contains(this,target) );
     }
-    private _contains( head:NODE, target:number ){
+    private _contains( head:NODE|null , target:number ){
+        
         if(head === null) return false;
+        
         if(head.data === target) return true;
+        
         return this._contains( head.nextNode , target );
     } 
+    
     sortNodes(compareValues:Function){ 
        return this._sortNodes(this,compareValues);
     }
-    private _sortNodes(head:NODE,compareValues:Function){
+    private _sortNodes( head:NODE, compareValues:Function ) {
+        
         let n = head.lenNode(); 
         let flag = true;  
+        
         while(flag){  
             flag = false;  
             for (let i = 0; i < n-1 ; i++) {  
 
-                let curr_i = head.getNode(i); 
-                let next_j = head.getNode(i+1); 
+                let curr_i = head._getNode(i); 
+                let next_j = head._getNode(i+1); 
 
                 if(compareValues(curr_i, next_j)>0){ 
-                    let buff_data = curr_i.data;
-                    head.setData(i, next_j.data);
+                    let buff_data = curr_i!.data;
+                    head.setData(i, next_j!.data);
                     head.setData(i+1, buff_data); 
                     flag = true; 
                 }
@@ -218,40 +271,51 @@ class NODE{
         //     }
         // }
     }
-    lenNode(){
+   
+    lenNode() {
         let count = 0;
-        let temp:NODE = this;
-        while(temp != null){
+        let temp:NODE|null = this;
+       
+        while(temp !== null){
             count++;
             temp = temp.nextNode;
         }
+
         return count;
     }
-    lenLog(){
+    
+    lenLog() {
         console.log( this._lenNode(this) );
     } 
-    private _lenNode(head:NODE){
+    private _lenNode( head:NODE|null ) {
+        
         if( head === null) return 0;
+        
         return 1 + this._lenNode(head.nextNode);
     }
+    
     printLog(){
-        let arr = [];
-        let temp:NODE = this;
+        let arr:number[] = [];
+        let temp:NODE|null = this;
+
         while(temp != null){
             arr.push(temp.data);
             temp = temp.nextNode;
         }
+
         console.log(arr);
     }
-    private printRecursive(myNode:NODE, cache=[]){
-        if(myNode === null)
-            return cache;
+    
+    private printRecursive( myNode:NODE|null, cache:number[] ) { 
+        if(myNode === null) return cache;
         
         cache.push( myNode.data );
         this.printRecursive(myNode.nextNode, cache);
     }
-    printStr(separator?:string, bool?:boolean){ 
+    
+    printStr( separator?:string, bool?:boolean ) { 
         let ret = this._printStr(this, separator);
+
         if(bool){
             console.log( ret );
             return ret;
@@ -259,42 +323,54 @@ class NODE{
         else
             return ret;
     }
-    private _printStr(myNode:NODE, separator = ' '){
+    private _printStr( myNode:NODE|null, separator = ' ' ) {
+        
         if(myNode === null) return '';
+        
         return myNode.data + separator + this._printStr(myNode.nextNode,separator);
     }
+   
     clone(){
         return this._clone(this);
     }
-    private _clone(head:NODE){
+    private _clone( head:NODE ) {
+       
         let clone = new NODE(head.data);
         let temp = head.nextNode;
-        while( temp != null){
+        
+        while( temp != null) {
             clone.push_back(temp.data);
             temp = temp.nextNode;
         }
+        
         return clone;
     }
-    reverse(){
+
+    reverse() {
         let temp = this.clone();
         return this._reverse(temp);
     }
-    reverseLog(){
+    reverseLog() {
         let temp = this.reverse();
         temp.printArr();
     }
-    private _reverse2( curr:NODE, prev=null){
+    private _reverse2( curr:NODE|null, prev:NODE|null ) {
         if(curr === null) return prev;
+        
         let next = curr.nextNode;
         curr.nextNode = prev;
+        
         this._reverse2(next, curr);
     }
     private _reverse( head:NODE ){ 
+
         if(head === null || head.nextNode === null)
             return head; 
+
         let newHead = this._reverse(head.nextNode); 
         head.nextNode.nextNode = head; 
         head.nextNode = null; 
+
         return newHead;
     }
     
@@ -302,19 +378,24 @@ class NODE{
         return this._sumList(this);
     }
     private _sumList(head:NODE){
-        if(head.nextNode === null)// the last node 
-            return head.data; 
+
+        if(head.nextNode === null) { 
+            return head.data;
+        }
+
         return head.data + head._sumList(head.nextNode);
     }
-};  
-function sortedMerge(a:NODE, b:NODE) {
-    if(a == null) return b;
-    if(b == null) return a;
+};
+
+function sortedMerge(a:NODE|null, b:NODE|null) {
+    if(a === null) return b;
+    if(b === null) return a;
 
     if(a.data < b.data){
         a.nextNode = sortedMerge(a.nextNode,b);
         return a;
-    } else {
+    } 
+    else {
         b.nextNode = sortedMerge(a,b.nextNode);
         return b;
     }
@@ -322,11 +403,12 @@ function sortedMerge(a:NODE, b:NODE) {
 function compareData(nodeA:NODE, nodeB:NODE) {
     return nodeA.data - nodeB.data;
 }
-function reverseIterative(head:NODE) {
-    let prev = null;
-    let curr = head;
+function reverseIterative( head:NODE ) {
+    let prev:NODE|null = null;
+    let curr:NODE|null = head;
      
-    if(head != null){ // a->b->c->null            c->b->a->null
+    if(head !== null) { // a->b->c->null            c->b->a->null
+
         while(curr != null){ 
             const next = curr.nextNode;
             curr.nextNode = prev; // null<-a
@@ -334,17 +416,21 @@ function reverseIterative(head:NODE) {
             prev = curr;
             curr = next;
         }
+
         return prev; 
     }
-    else
-        return head;
+    else return head;
 }
-function reverse3(curr:NODE, prev=null) { 
+function reverse3( curr:NODE|null, prev:NODE|null = null ) { 
+    
     if(curr === null) return prev;
+    
     let next = curr.nextNode;
     curr.nextNode = prev;
+    
     return reverse3(next, curr); 
 }
+
 let b = new NODE(1); 
 // b.pushVector([2]);
 let a = new NODE(50); // get Node
@@ -356,7 +442,7 @@ let myList = sortedMerge(a,b);
 // myList.sortNodes(compareData);// 1, 2, 4, 7, 50, 60 
 // myList.deleteItem(1);//dont work
 // myList.deleteItem(50);
-myList.printLog();
+myList!.printLog();
 // let res = reverseIterative(myList);
 let res = reverse3(myList);
 // console.log(res.data,res.nextNode )

@@ -10,9 +10,11 @@ class Solution{
     int maxPath(int grid[ ][COL],int row,int col){
         int sum[row+1][col+1];
 
-        for(int i=0;i<=row;i++)
-            for(int j=0;j<=col;j++)
+        for(int i=0; i <= row; i++){
+            for(int j=0;j<=col;j++){
                 sum[i][j]=0;
+            }
+        }
 
         for(int y=1; y<=row; y++){
             for(int x=1; x<=col; x++){   
