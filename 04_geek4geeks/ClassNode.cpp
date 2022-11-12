@@ -2,7 +2,10 @@
 #include <bits/stdc++.h>
 
 using namespace std;
- 
+
+/**
+ * @brief Node class made from scratch
+ */
 class Node{
   private: 
   int data = 0;
