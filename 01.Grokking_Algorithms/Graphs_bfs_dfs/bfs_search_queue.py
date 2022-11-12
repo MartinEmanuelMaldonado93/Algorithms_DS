@@ -25,5 +25,25 @@ def find( mygraph, key ):
             search_queue += mygraph[person]
     return False
 
-find( graph, 'you' )
+#find( graph, 'you' )
 
+words = {}
+words["cab"]= ["car","cat"]
+words["car"] = ["bar","cat"]
+words["cat"] = ["mat","bat"]
+words["bar"] = ["bat"]
+words["mat"] = ["bat"]
+
+def shortestPath(words,start,end):
+    arr = words[start]
+    #count = 0
+    while graph:
+        word = arr.pop(0)
+        if word is not end:
+            arr += words[word]
+        else:
+            return True
+    return False
+
+res = shortestPath(words,"cab","bat")
+print(res)

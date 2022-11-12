@@ -72,6 +72,7 @@ function shortestPath(edges:string[][], nodeA:string , nodeB:string ) {
     const graph = buildGraphIsland(edges);
     let visited = new Set( [ nodeA, 0 ] ); 
     const queue:[string, number][] = [ [nodeA, 0 ] ]; 
+    
     while( queue.length ){  
         let itemShifted = queue.shift(); 
         if(itemShifted){

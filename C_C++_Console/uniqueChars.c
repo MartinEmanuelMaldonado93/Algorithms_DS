@@ -2,37 +2,48 @@
 #include <stdlib.h>
 #include <string.h>
 #define COUNT_CHARS_ASCII 256
-int UniqueChars(char *str);
-//		Contador de caracteres repetidos sin funciones de C++ (map,set, etc.)
-int main()
-{  
-	printf("\n result :%d",UniqueChars("abcdddd")); //0 false
-	printf("\n result :%d",UniqueChars("1111234")); //0 false
-	printf("\n result :%d",UniqueChars("abcd")); 	//1 true
-	printf("\n result :%d",UniqueChars("$23/()"));  //1 true
-    return 0;
-}
-int UniqueChars(char *str){
-		int lenStr = strlen(str);//9
-		int lenCloneStr;
-		int *count = (int*)calloc( COUNT_CHARS_ASCII, sizeof(int));
-		char *cadena = (char*)calloc(lenStr, sizeof(char));
 
-		if(count!=NULL){
+// Algorithm to find if a string contains repeated characters without functions of C++ (map,set, etc.)
+int containUniqueChars(char *str);
 
-			for (int i = 0; str[i] ; i++){
-				char auxChar = str[i];// 97->a ..para que no me tire error IDE eclipse
-				int auxInt = str[i]; // a->97
-				if(count[auxInt]<1)//count[97] == 0
-					cadena[i]=auxChar;
+int containUniqueChars(char *str) {
+	if (!str) {
+		printf(" *** Error Parameter null *** ");
+		return -1;
+	}
 
-				count[auxInt]++;//	count[97] == 1
-			}
+	int strLen = strlen(str);
+	int *asciiDictionary = (int *)calloc(COUNT_CHARS_ASCII, sizeof(int));
+	char *tempStr = (char *)calloc(strLen, sizeof(char));
 
-			lenCloneStr = strlen(cadena);
-			free(count);
-			free(cadena);
+	if (!tempStr || !asciiDictionary) {
+		printf("\nError, cannot allocate memory");
+		return -1;
+	}
+	
+	for (int i = 0; str[i] ; i++) {
+		char currLetter = str[i];
+		int codeLetter = (int) currLetter;
+
+		if (asciiDictionary[codeLetter] == 0){ //if has 0 apparitions complete my tempStr
+			tempStr[i] = currLetter;
 		}
 
-		return (lenCloneStr==lenStr);
+		asciiDictionary[codeLetter]++;//count the frequency
+	}
+
+	int tempStrLen = strlen(tempStr);
+
+	free(asciiDictionary);
+	free(tempStr);
+
+	return tempStrLen == strLen;
 };
+
+int main() {
+	printf("\n result :%s", containUniqueChars(NULL) == 1 ? "true" : "false");		 // 0 false
+	printf("\n result :%s", containUniqueChars("1111234") == 1 ? "true" : "false"); // 0 false
+	printf("\n result :%s", containUniqueChars("abcd") == 1 ? "true" : "false");	 // 1 true
+	printf("\n result :%s", containUniqueChars("$23/()") == 1 ? "true" : "false");	 // 1 true
+	return 0;
+}
