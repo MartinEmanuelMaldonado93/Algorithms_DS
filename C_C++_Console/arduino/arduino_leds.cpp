@@ -1,3 +1,4 @@
+// define .. .
 void printDigit(int digit)
 {
   digitalWrite(A, LOW);
